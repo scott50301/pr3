@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 #SBATCH --job-name=sort
-#SBATCH --nodes=3
+#SBATCH --nodes=1
 #SBATCH --partition=gpu
 #SBATCH --cpus-per-task=1
-#SBATCH --ntasks=84
-#SBATCH --mem-per-cpu=16G
+#SBATCH --ntasks=4
+#SBATCH --mem-per-cpu=8G
 #SBATCH --output=sort-%j.out 
 #SBATCH --time=01:00:00
 #SBATCH --mail-type=ALL
