@@ -184,7 +184,7 @@ int main(int argc, char ** argv)
 		mergeSort(a,n);
 		endTime = omp_get_wtime();
 		printf("\nSorted array:  ");
-		printArray(a,n);
+		//printArray(a,n);
 		printf("\n");
 		test(a,n);
 		printf("ACC");
