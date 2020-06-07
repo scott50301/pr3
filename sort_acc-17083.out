@@ -1,0 +1,61 @@
+/var/spool/slurm/d/job17083/slurm_script: line 13: PGI/19.10-GCC-8.3.0-2.32: No such file or directory
+Lmod has detected the following error: The following module(s) are unknown:
+"log_file_name=sort-2020.06.07-03.08.19.log"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "log_file_name=sort-2020.06.07-03.08.19.log"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+
+Sorted array:  
+
+Array is sorted
+ACC
+Time: 0.00352502
+
+Size of the array is 10000
+
+Sorted array:  
+
+Array is sorted
+ACC
+Time: 0.0145991
+
+Size of the array is 100000
+
+Sorted array:  
+
+Array is sorted
+ACC
+Time: 0.114407
+
+Size of the array is 1000000
+
+Sorted array:  
+
+Array is sorted
+ACC
+Time: 1.23569
+
+Size of the array is 10000000
+
+Sorted array:  
+
+Array is sorted
+ACC
+Time: 13.0978
+
+Size of the array is 100000000
+
+Sorted array:  
+
+Array is sorted
+ACC
+Time: 149.428
+
+Size of the array is 1000000000
