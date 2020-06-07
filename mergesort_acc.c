@@ -8,7 +8,8 @@
 
 //Function to test if the output is in asending order or not
 bool test(int a[], int n) {
-	for(size_t i=1; i < N; ++i){
+	int i;
+	for( i=1; i < N; ++i){
 		if(array[i] < array[i-1]){
 			return false;
 		}
@@ -135,8 +136,8 @@ int main(int argc, char ** argv)
 	mergeSort(arr,n);
 	endTime = omp_get_wtime();
 	printf("Size of the array is %d\n",n);
-	if (operation)
 	bool sorted = test(arr,n);
+	printf("%s\n", sorted ? "true" : "false");
 	printf("\nTime: %g\n",endTime-startTime);
 	
 	exit(0);
