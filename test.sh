@@ -15,4 +15,6 @@ current_time=$(date "+%Y.%m.%d-%H.%M.%S")
 log_file_name=sort-$current_time.log
 file_path=/WAVE/users/unix/sjhou/pr3
 
-./mergesort 10000000
+for size in 10000 100000 1000000 10000000 100000000 1000000000; do
+	./mergesort $size
+done
