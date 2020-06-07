@@ -161,7 +161,7 @@ int main(int argc, char ** argv)
 	a = (int *)malloc(sizeof(int) * n);
 	srand(time(0));
 	for(i=0;i<n;i++){
-		a[i]=rand()%1000;
+		a[i]=rand()%n;
 	}
 	//printf("List Before Sorting...\n");
 	//printArray(a, n);
@@ -184,7 +184,7 @@ int main(int argc, char ** argv)
 		mergeSort(a,n);
 		endTime = omp_get_wtime();
 		printf("\nSorted array:  ");
-		//printArray(a,n);
+		//rprintArray(a,n);
 		printf("\n");
 		test(a,n);
 		printf("ACC");
