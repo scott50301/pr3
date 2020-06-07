@@ -4,7 +4,6 @@
 #include <time.h>
 #include <omp.h>
 #include <openacc.h>
-#define THR 10
 
 
 //Function to test if the output is in asending order or not

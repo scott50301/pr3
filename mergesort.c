@@ -67,20 +67,21 @@ int main(int argc, char** argv)
     //int n = 10000000;
     int * arr;
     int i ;
-    double startTime, endTime;
+    clock_t ts, te;
 
     arr = (int*)malloc(sizeof(int) * n);
     srand(time(0));
     for (i = 0; i < n; i++) {
         arr[i] = rand() % n;
     }
+
     printf("\n");
-    startTime = omp_get_wtime();
+    ts = clock();
     mergesort(arr, 0, n - 1);
-    endTime = omp_get_wtime();
+    te = clock();
    
     bool res = check_sorted(arr, n);
- 
+    //for (i = 0; i < n; i++) printf(" %d", arr[i]);
     printf("%s\n", res ? "true" : "false");
-    printf("\nTime: %g\n",endTime-startTime);
+    print_time((double)(te-ts)/CLOCKS_PER_SEC);
 }
