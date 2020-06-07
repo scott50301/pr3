@@ -151,7 +151,8 @@ void printArray(int A[], int size)
 /* Driver program to test above functions */
 int main(int argc, char ** argv)
  {
-	int i, n=100, *a;
+ 	int n = atoi(argv[1]);;
+	int i, *a;
 	double startTime, endTime;
 	
 	printf("How many elements in the array? ");
@@ -159,7 +160,7 @@ int main(int argc, char ** argv)
 	a = (int *)malloc(sizeof(int) * n);
 	srand(time(0));
 	for(i=0;i<n;i++){
-	a[i]=rand()%1000;
+		a[i]=rand()%1000;
 	}
 	printf("List Before Sorting...\n");
 	printArray(a, n);
