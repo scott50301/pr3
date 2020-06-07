@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include <stdbool.h>
 #include <time.h>
 #include <omp.h>
 #include <openacc.h>
@@ -7,42 +8,15 @@
 
 
 //Function to test if the output is in asending order or not
-void test(int a[], int n) {
-int i;
-for (i=1;i<n;++i) {
-if (a[i]<a[i-1]) {
-  break;
-}
-}
-if (i<n) {
-for (i=1;i<n;++i) {
-   if (a[i]>a[i-1]){
-      break;
-   }
- }
-if (i<n) {
-  printf("\nArray is not sorted\n");
-}
-}
-else {
-printf("\nArray is sorted\n");
-}
+bool test(int a[], int n) {
+	for(size_t i=1; i < N; ++i){
+		if(array[i] < array[i-1]){
+			return false;
+		}
+	}
+	return true;
 }
 
- /* Function to sort an array using insertion sort in serial*/
-//void isort (int *array, int low, int mid, int high) {
-//
-//for (int i = mid; i <= high; i++) {
-//    for (int j = i - 1; j >= 0; j--) {
-//        if (array[i] < array [j]) {
-//            int holder = array[j];
-//            array[j] = array[i];
-//            array[i] = holder;
-//            i--;
-//        }
-//    }
-// }
-// }
 /* Function to merge */
 void merge(int arr[], int l, int m, int r);
 
@@ -140,58 +114,33 @@ void mergeSort(int arr[], int n)
 }
 
 
-/* Function to print an array */
-void printArray(int A[], int size)
-{
-	int i;
-	for (i=0; i < size; i++)
-	    printf("%d ", A[i]);
-	printf("\n");
-}
 
-/* Driver program to test above functions */
 int main(int argc, char ** argv)
  {
  	int n = atoi(argv[1]);;
-	int i, *a;
+	int i, *arr;
 	double startTime, endTime;
+	char operation;
 	
-	//printf("How many elements in the array? ");
-	
-	a = (int *)malloc(sizeof(int) * n);
-	srand(time(0));
-	for(i=0;i<n;i++){
-		a[i]=rand()%n;
+	if (argc == 3){
+		operation = argv[2];
 	}
-	//printf("List Before Sorting...\n");
-	//printArray(a, n);
-	 
-//	if (n<=THR){
-//		startTime = omp_get_wtime();
-//		isort(a,0,0,n);
-//		endTime = omp_get_wtime();
-//		printf("\nSorted array:  ");
-//		printArray(a,n);
-//		printf("\n");
-//		test(a,n);
-//		printf("IN");
-//		printf("\nTime: %g\n",endTime-startTime);
-//		exit(0);
-//	}
-//	
-//	else{
-		startTime = omp_get_wtime();
-		mergeSort(a,n);
-		endTime = omp_get_wtime();
-		printf("\nSorted array:  ");
-		//rprintArray(a,n);
-		printf("\n");
-		test(a,n);
-		printf("ACC");
-		printf("\nTime: %g\n",endTime-startTime);
-		printf("\nSize of the array is %d\n",n);
-		
-		exit(0);
-	//}
+	
+	arr = (int *)malloc(sizeof(int) * n);
+	srand(time(0));
+	for(i = 0; i < n; i++){
+		arr[i] = rand() % n;
+	}
+
+	startTime = omp_get_wtime();
+	mergeSort(arr,n);
+	endTime = omp_get_wtime();
+	printf("Size of the array is %d\n",n);
+	if (operation)
+	bool sorted = test(arr,n);
+	printf("\nTime: %g\n",endTime-startTime);
+	
+	exit(0);
+
 }
 
