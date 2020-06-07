@@ -30,19 +30,19 @@ printf("\nArray is sorted\n");
 }
 
  /* Function to sort an array using insertion sort in serial*/
-void isort (int *array, int low, int mid, int high) {
-
-for (int i = mid; i <= high; i++) {
-    for (int j = i - 1; j >= 0; j--) {
-        if (array[i] < array [j]) {
-            int holder = array[j];
-            array[j] = array[i];
-            array[i] = holder;
-            i--;
-        }
-    }
- }
- }
+//void isort (int *array, int low, int mid, int high) {
+//
+//for (int i = mid; i <= high; i++) {
+//    for (int j = i - 1; j >= 0; j--) {
+//        if (array[i] < array [j]) {
+//            int holder = array[j];
+//            array[j] = array[i];
+//            array[i] = holder;
+//            i--;
+//        }
+//    }
+// }
+// }
 /* Function to merge */
 void merge(int arr[], int l, int m, int r);
 
@@ -53,29 +53,30 @@ int min(int x, int y) { return (x<y)? x :y; }
 /* Iterative mergesort function to sort arr[0...n-1] */
 void mergeSort(int arr[], int n)
 {
-int curr_size;  // For current size of subarrays to be merged
-               // curr_size varies from 1 to n/2
-int left_start; // For picking starting index of left subarray
-               // to be merged
-#pragma acc data copy(arr[0:n])// pcopying (R[0:n2])
-      {
-  for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size)
- {
-  #pragma acc parallel loop
-   // Pick starting point of different subarrays of current size
-   for (left_start=0; left_start<n-1; left_start += 2*curr_size)
-   {
-       // Find ending point of left subarray. mid+1 is starting
-       // point of right
-       int mid = left_start + curr_size - 1;
-
-       int right_end = min(left_start + 2*curr_size - 1, n-1);
-
-       // Merge Subarrays arr[left_start...mid] & arr[mid+1...right_end]
-       if (mid < right_end) merge(arr, left_start, mid, right_end);
-   }
- }
-}}
+	int curr_size;  // For current size of subarrays to be merged
+	               // curr_size varies from 1 to n/2
+	int left_start; // For picking starting index of left subarray
+	               // to be merged
+	#pragma acc data copy(arr[0:n])// pcopying (R[0:n2])
+	      {
+	  for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size)
+	 {
+	  #pragma acc parallel loop
+	   // Pick starting point of different subarrays of current size
+	   for (left_start=0; left_start<n-1; left_start += 2*curr_size)
+	   {
+	       // Find ending point of left subarray. mid+1 is starting
+	       // point of right
+	       int mid = left_start + curr_size - 1;
+	
+	       int right_end = min(left_start + 2*curr_size - 1, n-1);
+	
+	       // Merge Subarrays arr[left_start...mid] & arr[mid+1...right_end]
+	       if (mid < right_end) merge(arr, left_start, mid, right_end);
+	   }
+	 }
+	}
+}
 
 /* Function to merge the two haves arr[l..m] and arr[m+1..r] of array arr[]
 */
@@ -155,30 +156,30 @@ int main(int argc, char ** argv)
 	int i, *a;
 	double startTime, endTime;
 	
-	printf("How many elements in the array? ");
+	//printf("How many elements in the array? ");
 	
 	a = (int *)malloc(sizeof(int) * n);
 	srand(time(0));
 	for(i=0;i<n;i++){
 		a[i]=rand()%1000;
 	}
-	printf("List Before Sorting...\n");
-	printArray(a, n);
+	//printf("List Before Sorting...\n");
+	//printArray(a, n);
 	 
-	if (n<=THR){
-		startTime = omp_get_wtime();
-		isort(a,0,0,n);
-		endTime = omp_get_wtime();
-		printf("\nSorted array:  ");
-		printArray(a,n);
-		printf("\n");
-		test(a,n);
-		printf("IN");
-		printf("\nTime: %g\n",endTime-startTime);
-		exit(0);
-	}
-	
-	else{
+//	if (n<=THR){
+//		startTime = omp_get_wtime();
+//		isort(a,0,0,n);
+//		endTime = omp_get_wtime();
+//		printf("\nSorted array:  ");
+//		printArray(a,n);
+//		printf("\n");
+//		test(a,n);
+//		printf("IN");
+//		printf("\nTime: %g\n",endTime-startTime);
+//		exit(0);
+//	}
+//	
+//	else{
 		startTime = omp_get_wtime();
 		mergeSort(a,n);
 		endTime = omp_get_wtime();
@@ -191,6 +192,6 @@ int main(int argc, char ** argv)
 		printf("\nSize of the array is %d\n",n);
 		
 		exit(0);
-	}
+	//}
 }
 
