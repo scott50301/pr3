@@ -71,6 +71,7 @@ int main(int argc, char** argv)
 	char *verify = "-v";
     int i ;
     clock_t ts, te;
+    double startTime, endTime;
 
 	if (argc == 3){
 		operation = argv[2];
@@ -83,7 +84,9 @@ int main(int argc, char** argv)
 
     printf("\n");
     ts = clock();
+    startTime = omp_get_wtime();
     mergesort(arr, 0, n - 1);
+    endTime = omp_get_wtime();
     te = clock();
    
     if(!strcasecmp(verify, operation)){
@@ -91,5 +94,6 @@ int main(int argc, char** argv)
     	//for (i = 0; i < n; i++) printf(" %d", arr[i]);
    		printf("The array is sorted:%s\n", res ? "true" : "false");
    	}
+   	printf("\nTime: %g\n",endTime-startTime);
     print_time((double)(te-ts)/CLOCKS_PER_SEC);
 }
