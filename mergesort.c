@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include <time.h>
 #include <omp.h>
+#include <string.h>
 #include <stdbool.h>
 
 void merge(int* arr, int left, int mid, int right)
