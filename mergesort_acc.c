@@ -136,7 +136,7 @@ int main(int argc, char ** argv)
 	printf("Size of the array is %d\n",n);
 	if(!strcasecmp(verify, operation)){
 		bool sorted = check_sorted(arr,n);
- 		printf("%s\n", sorted ? "true" : "false");
+ 		printf("The array is sorted:%s\n", sorted ? "true" : "false");
 	}
 	
 	printf("\nTime: %g\n",endTime-startTime);

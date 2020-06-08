@@ -66,9 +66,14 @@ int main(int argc, char** argv)
     int n = atoi(argv[1]);
     //int n = 10000000;
     int * arr;
+    char *operation = "";
+	char *verify = "-v";
     int i ;
     clock_t ts, te;
 
+	if (argc == 3){
+		operation = argv[2];
+	}
     arr = (int*)malloc(sizeof(int) * n);
     srand(time(0));
     for (i = 0; i < n; i++) {
@@ -80,7 +85,10 @@ int main(int argc, char** argv)
     mergesort(arr, 0, n - 1);
     te = clock();
    
-    bool res = check_sorted(arr, n);
-    printf("%s\n", res ? "true" : "false");
+    if(!strcasecmp(verify, operation)){
+    	bool res = check_sorted(arr, n);
+    	//for (i = 0; i < n; i++) printf(" %d", arr[i]);
+   		printf("The array is sorted:%s\n", res ? "true" : "false");
+   	}
     print_time((double)(te-ts)/CLOCKS_PER_SEC);
 }
