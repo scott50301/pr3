@@ -134,7 +134,7 @@ int main(int argc, char ** argv)
 	mergeSort(arr,n);
 	endTime = omp_get_wtime();
 	printf("Size of the array is %d\n",n);
-	if (strcmp(operation, verify)){
+	if (strcmp(operation, verify) == 0){
 		bool sorted = check_sorted(arr,n);
  		printf("%s\n", sorted ? "true" : "false");
 	}
