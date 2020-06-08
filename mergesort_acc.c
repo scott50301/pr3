@@ -117,7 +117,7 @@ int main(int argc, char ** argv)
  	int n = atoi(argv[1]);;
 	int i, *arr;
 	double startTime, endTime;
-	char operation;
+	char operation = "";
 	
 	if (argc == 3){
 		operation = argv[2];
