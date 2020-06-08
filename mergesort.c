@@ -5,16 +5,16 @@
 #include <string.h>
 #include <stdbool.h>
 
-void merge(int* arr, int left, int mid, int right)
+void merge(int* arr, int l, int m, int r)
 {
     int* tmp_arr = NULL;
     int i = 0;
-    int l1 = left;
-    int r1 = mid;
-    int l2 = mid + 1;
-    int r2 = right;
+    int l1 = l;
+    int r1 = m;
+    int l2 = m + 1;
+    int r2 = r;
 
-    tmp_arr = (int*)malloc(sizeof(int) * (right - left + 1));
+    tmp_arr = (int*)malloc(sizeof(int) * (r - l + 1));
 
     while ((l1 <= r1) && (l2 <= r2))
     {
@@ -27,22 +27,22 @@ void merge(int* arr, int left, int mid, int right)
     while (l1 <= r1) tmp_arr[i++] = arr[l1++];
     while (l2 <= r2) tmp_arr[i++] = arr[l2++];
 
-    for (i = left; i <= right; i++) arr[i] = tmp_arr[i - left];
+    for (i = l; i <= r; i++) arr[i] = tmp_arr[i - l];
 
     free(tmp_arr);
 }
 
-void mergesort(int* arr, int left, int right)
+void mergesort(int* arr, int l, int r)
 {
-    int mid = 0;
+    int m = 0;
 
-    if (left < right)
+    if (l < r)
     {
-        mid = (left + right) / 2;
-        mergesort(arr, left, mid);
-        mergesort(arr, mid + 1, right);
+        m = (l + r) / 2;
+        mergesort(arr, l, m);
+        mergesort(arr, m + 1, r);
 
-        merge(arr, left, mid, right);
+        merge(arr, l, m, r);
     }
 }
 
@@ -56,11 +56,11 @@ bool check_sorted(int* arr, int N){
 	return true;
 }
 
-static void
-print_time(double const seconds)
-{
-  printf("Operation Time: %0.04fs\n", seconds);
-}
+//static void
+//print_time(double const seconds)
+//{
+//  printf("Operation Time: %0.04fs\n", seconds);
+//}
 
 int main(int argc, char** argv)
 {
@@ -70,7 +70,7 @@ int main(int argc, char** argv)
     char *operation = "";
 	char *verify = "-v";
     int i ;
-    clock_t ts, te;
+    //clock_t ts, te;
     double startTime, endTime;
 
 	if (argc == 3){
@@ -83,11 +83,11 @@ int main(int argc, char** argv)
     }
 
     printf("\n");
-    ts = clock();
+    //ts = clock();
     startTime = omp_get_wtime();
     mergesort(arr, 0, n - 1);
     endTime = omp_get_wtime();
-    te = clock();
+   //te = clock();
    
     if(!strcasecmp(verify, operation)){
     	bool res = check_sorted(arr, n);
@@ -95,5 +95,5 @@ int main(int argc, char** argv)
    		printf("The array is sorted:%s\n", res ? "true" : "false");
    	}
    	printf("\nTime: %g\n",endTime-startTime);
-    print_time((double)(te-ts)/CLOCKS_PER_SEC);
+    //print_time((double)(te-ts)/CLOCKS_PER_SEC);
 }

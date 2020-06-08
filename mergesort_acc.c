@@ -21,31 +21,26 @@ bool check_sorted(int* arr, int N){
 
 void merge(int arr[], int l, int m, int r);
 
-
 #pragma acc routine seq
-int min(int x, int y) { return (x<y)? x :y; }
+int compare(int n1, int n2) { return (n1 < n2)? n1 : n2; }
 
-/* Iterative mergesort function to sort arr[0...n-1] */
 void mergeSort(int arr[], int n)
 {
-	int curr_size;  // For current size of subarrays to be merged
-	               // curr_size varies from 1 to n/2
-	int left_start; 
+	int currSize;  
+	int leftStart; 
 	             
 	#pragma acc data copy(arr[0:n])
 	{
-	  for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size){
+	  for (currSize=1; currSize<=n-1; currSize = 2*currSize){
 	  #pragma acc parallel loop
 	   
-	   for (left_start=0; left_start<n-1; left_start += 2*curr_size){
-	       // Find ending point of left subarray. mid+1 is starting
-	       // point of right
-	       int mid = left_start + curr_size - 1;
+	   for (leftStart=0; leftStart<n-1; leftStart += 2*currSize){
+
+	       int mid = leftStart + currSize - 1;
 	
-	       int right_end = min(left_start + 2*curr_size - 1, n-1);
+	       int rightEnd = compare(leftStart + 2*currSize - 1, n-1);
 	
-	       // Merge Subarrays arr[left_start...mid] & arr[mid+1...right_end]
-	       if (mid < right_end) merge(arr, left_start, mid, right_end);
+	       if (mid < rightEnd) merge(arr, leftStart, mid, rightEnd);
 	   }
 	 }
 	}
@@ -56,19 +51,19 @@ void mergeSort(int arr[], int n)
  void merge(int arr[], int l, int m, int r)
 {
 	int i, j, k;
-	int n1 = m - l + 1;
-	int n2 =  r - m;
+	int ln = m - l + 1;
+	int rn =  r - m;
 	
 	/* create temp arrays of left and right parts*/
 	int *L, *R;
-	 L = (int *)malloc(sizeof(int) * n1);
-	 R = (int *)malloc(sizeof(int) * n2);
+	 L = (int *)malloc(sizeof(int) * ln);
+	 R = (int *)malloc(sizeof(int) * rn);
 	/* Copy data to temp arrays L[] and R[] */
 	 #pragma acc loop independent
-	for (i = 0; i < n1; i++)
+	for (i = 0; i < ln; i++)
 	    L[i] = arr[l + i];
 	 #pragma acc loop independent
-	for (j = 0; j < n2; j++)
+	for (j = 0; j < rn; j++)
 	    R[j] = arr[m + 1+ j];
 	
 	/* Merge the left and right arrays to original array */
@@ -76,7 +71,7 @@ void mergeSort(int arr[], int n)
 	j = 0;
 	k = l;
 	
-	while (i < n1 && j < n2)
+	while (i < ln && j < rn)
 	{
 	    if (L[i] <= R[j])
 	    {
@@ -93,7 +88,7 @@ void mergeSort(int arr[], int n)
 	
 	/* Copy the remaining elements of left part */
 	
-	while (i < n1)
+	while (i < ln)
 	{
 	    arr[k] = L[i];
 	    i++;
@@ -101,7 +96,7 @@ void mergeSort(int arr[], int n)
 	}
 	
 	/* Copy the remaining elements of right part */
-	while (j < n2)
+	while (j < rn)
 	{
 	    arr[k] = R[j];
 	    j++;
@@ -143,6 +138,5 @@ int main(int argc, char ** argv)
 	printf("\nTime: %g\n",endTime-startTime);
 	
 	exit(0);
-
 }
 
