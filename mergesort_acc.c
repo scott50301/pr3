@@ -117,8 +117,8 @@ int main(int argc, char ** argv)
  	int n = atoi(argv[1]);;
 	int i, *arr;
 	double startTime, endTime;
-	char operation = "";
-	char verify = "-v";
+	char *operation = "";
+	char *verify = "-v";
 	
 	if (argc == 3){
 		operation = argv[2];
@@ -134,7 +134,7 @@ int main(int argc, char ** argv)
 	mergeSort(arr,n);
 	endTime = omp_get_wtime();
 	printf("Size of the array is %d\n",n);
-	if (strcmp(operation, verify) == 0){
+	if(!strcasecmp(verify, operation)){
 		bool sorted = check_sorted(arr,n);
  		printf("%s\n", sorted ? "true" : "false");
 	}
