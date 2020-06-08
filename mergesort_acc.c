@@ -6,7 +6,7 @@
 #include <openacc.h>
 
 
-//Function to test if the output is in asending order or not
+//Function to check the array is sorted
 bool check_sorted(int* arr, int N){
 	int i ;
 	for(i=1; i < N; ++i){
@@ -17,10 +17,10 @@ bool check_sorted(int* arr, int N){
 	return true;
 }
 
-/* Function to merge */
+
 void merge(int arr[], int l, int m, int r);
 
-// Utility function to find minimum of two integers
+
 #pragma acc routine seq
 int min(int x, int y) { return (x<y)? x :y; }
 
@@ -29,16 +29,14 @@ void mergeSort(int arr[], int n)
 {
 	int curr_size;  // For current size of subarrays to be merged
 	               // curr_size varies from 1 to n/2
-	int left_start; // For picking starting index of left subarray
-	               // to be merged
-	#pragma acc data copy(arr[0:n])// pcopying (R[0:n2])
-	      {
-	  for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size)
-	 {
+	int left_start; 
+	             
+	#pragma acc data copy(arr[0:n])
+	{
+	  for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size){
 	  #pragma acc parallel loop
-	   // Pick starting point of different subarrays of current size
-	   for (left_start=0; left_start<n-1; left_start += 2*curr_size)
-	   {
+	   
+	   for (left_start=0; left_start<n-1; left_start += 2*curr_size){
 	       // Find ending point of left subarray. mid+1 is starting
 	       // point of right
 	       int mid = left_start + curr_size - 1;
@@ -52,8 +50,7 @@ void mergeSort(int arr[], int n)
 	}
 }
 
-/* Function to merge the two haves arr[l..m] and arr[m+1..r] of array arr[]
-*/
+/* Function to merge the two haves */
  #pragma acc routine(merge) vector
  void merge(int arr[], int l, int m, int r)
 {
@@ -61,7 +58,7 @@ void mergeSort(int arr[], int n)
 	int n1 = m - l + 1;
 	int n2 =  r - m;
 	
-	/* create temp arrays */
+	/* create temp arrays of left and right parts*/
 	int *L, *R;
 	 L = (int *)malloc(sizeof(int) * n1);
 	 R = (int *)malloc(sizeof(int) * n2);
@@ -73,7 +70,7 @@ void mergeSort(int arr[], int n)
 	for (j = 0; j < n2; j++)
 	    R[j] = arr[m + 1+ j];
 	
-	/* Merge the temp arrays back into arr[l..r]*/
+	/* Merge the left and right arrays to original array */
 	i = 0;
 	j = 0;
 	k = l;
@@ -93,7 +90,7 @@ void mergeSort(int arr[], int n)
 	    k++;
 	}
 	
-	/* Copy the remaining elements of L[], if there are any */
+	/* Copy the remaining elements of left part */
 	
 	while (i < n1)
 	{
@@ -102,7 +99,7 @@ void mergeSort(int arr[], int n)
 	    k++;
 	}
 	
-	/* Copy the remaining elements of R[], if there are any */
+	/* Copy the remaining elements of right part */
 	while (j < n2)
 	{
 	    arr[k] = R[j];
@@ -136,8 +133,11 @@ int main(int argc, char ** argv)
 	mergeSort(arr,n);
 	endTime = omp_get_wtime();
 	printf("Size of the array is %d\n",n);
-	bool sorted = check_sorted(arr,n);
-	printf("%s\n", sorted ? "true" : "false");
+	if (strcmp(operation, "-v")){
+		bool sorted = check_sorted(arr,n);
+ 		printf("%s\n", sorted ? "true" : "false");
+	}
+	
 	printf("\nTime: %g\n",endTime-startTime);
 	
 	exit(0);

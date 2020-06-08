@@ -81,7 +81,6 @@ int main(int argc, char** argv)
     te = clock();
    
     bool res = check_sorted(arr, n);
-    //for (i = 0; i < n; i++) printf(" %d", arr[i]);
     printf("%s\n", res ? "true" : "false");
     print_time((double)(te-ts)/CLOCKS_PER_SEC);
 }
